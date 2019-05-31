@@ -545,8 +545,10 @@ PnPResponsiveApp.Main = (function () {
             /* If suiteBarTop of SP2016/online doesn't exists, it is maybe because is a SP2013 ? */
             if (!topBar) {
                 topBar = document.getElementById('suiteBar');
-                topNavLeft = topBar.querySelector('.ms-verticalAlignMiddle');
+                topNavLeft = topBar ? topBar.querySelector('.ms-verticalAlignMiddle') : null;
                 topNavLeft = topNavLeft ? topNavLeft.parentNode : null;
+                /* Still no topBar? May still be 2016 or Online and Suitbar not yet created */
+				if (!topBar && !ensureElemCreation(document.getElementById('aspnetForm'), topBar)) { return; }
             } else {
                 topNavLeft = topBar.getElementsByClassName('o365cs-nav-leftAlign')[0];
                 /* Support new version of SharePoint Online SuiteBar */
